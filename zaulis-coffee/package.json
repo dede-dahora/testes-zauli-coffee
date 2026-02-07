@@ -1,0 +1,16 @@
+{
+  "name": "zaulis-coffee-api",
+  "version": "1.0.0",
+  "description": "API para o e-commerce Zauli's Coffee",
+  "main": "db.json",
+  "scripts": {
+    "start": "json-server db.json --port 3000",
+    "dev": "json-server --watch db.json --port 3000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "json-server": "^0.17.0"
+  },
+  "author": "Seu Nome",
+  "license": "MIT"
+}

@@ -1,0 +1,15 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "nome": "Café Especial Blend Brasil",
+      "descricao": "Blend exclusivo de grãos brasileiros com notas de chocolate",
+      "preco": 24.90,
+      "imagem": "https://images.unsplash.com/photo-1587734195503-904137cec4e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+      "categoria": "grãos",
+      "estoque": 50
+    }
+  ],
+  "orders": [],
+  "newsletter": []
+}

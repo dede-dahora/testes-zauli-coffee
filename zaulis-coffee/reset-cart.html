@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resetar Carrinho - Zauli's Coffee</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        h1 {
+            color: #8B4513;
+            margin-bottom: 20px;
+        }
+        
+        .icon {
+            font-size: 60px;
+            margin: 20px 0;
+        }
+        
+        p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #8B4513;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        a:hover {
+            background: #D2691E;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Resetar Carrinho</h1>
+        <div class="icon">☕</div>
+        <div id="status" class="status success">
+            ✓ Carrinho resetado com sucesso!
+        </div>
+        <p>Seu carrinho foi completamente limpo.</p>
+        <p id="countdown">Redirecionando em 3 segundos...</p>
+        <a href="index.html">Voltar ao site</a>
+    </div>
+
+    <script>
+        // Resetar o carrinho
+        localStorage.removeItem('carrinho');
+        
+        // Countdown
+        let count = 3;
+        const countdownEl = document.getElementById('countdown');
+        
+        const interval = setInterval(() => {
+            count--;
+            if (count > 0) {
+                countdownEl.textContent = `Redirecionando em ${count} segundos...`;
+            } else {
+                clearInterval(interval);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
