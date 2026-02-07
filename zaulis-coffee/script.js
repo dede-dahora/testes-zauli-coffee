@@ -18,7 +18,6 @@ const checkoutButton = document.getElementById('checkoutButton');
 const clearCartButton = document.getElementById('clearCartButton');
 const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
-const newsletterForm = document.getElementById('newsletterForm');
 const productModal = document.getElementById('productModal');
 const closeModal = document.getElementById('closeModal');
 const productModalImg = document.getElementById('productModalImg');
@@ -60,6 +59,21 @@ const produtosMock = [
         descricao: "Café torrado e moído, perfeito para sua xícara diária",
         preco: 90.00,
         imagem: "fotos/cafe.png"
+    },
+    {
+        id: 5,
+        nome: "Cápsulas para Máquinas de cápsulas - 8 unidades",
+        descricao: "Capsulas compatíveis com máquinas de café expresso, para uma preparação rápida e prática",
+        preco: 40.00,
+        imagem: "fotos/cafe.png"
+    },
+   {
+        id: 6,
+        nome: "Kit Café Torrado Moído e em grãos - 1kg cada",
+        descricao: "Kit com 1kg de café torrado em grãos e 1kg de café torrado moído, para você escolher como prefere preparar",
+        preco: 165.00,
+        precoOriginal: 200.00,
+        imagem: "fotos/cafes.png"
     }
 ];
 
@@ -76,7 +90,12 @@ function renderProducts() {
                 <h3 class="product-title">${produto.nome}</h3>
                 <p class="product-description">${produto.descricao}</p>
                 <div class="product-footer">
-                    <span class="product-price">R$ ${produto.preco.toFixed(2)}</span>
+                    ${produto.precoOriginal ? `
+                        <span class="price-original">R$ ${produto.precoOriginal.toFixed(2)}</span>
+                        <span class="product-price price-sale">R$ ${produto.preco.toFixed(2)}</span>
+                    ` : `
+                        <span class="product-price">R$ ${produto.preco.toFixed(2)}</span>
+                    `}
                     <button class="add-to-cart" data-id="${produto.id}" aria-label="Adicionar ${produto.nome} ao carrinho">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -249,18 +268,6 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
     });
 });
 
-// Newsletter
-if (newsletterForm) {
-    newsletterForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = newsletterForm.querySelector('input[type="email"]').value;
-        if (email) {
-            showToast('Email cadastrado com sucesso!');
-            newsletterForm.reset();
-        }
-    });
-}
-
 // Slider de depoimentos
 function initTestimonials() {
     let currentSlide = 0;
@@ -314,7 +321,14 @@ function openProductModal(id) {
     productModalImg.alt = produto.nome;
     productModalTitle.textContent = produto.nome;
     productModalDesc.textContent = produto.descricao;
-    productModalPrice.textContent = `R$ ${produto.preco.toFixed(2)}`;
+    if (produto.precoOriginal) {
+        productModalPrice.innerHTML = `
+            <span class="price-original">R$ ${produto.precoOriginal.toFixed(2)}</span>
+            <span class="product-price price-sale">R$ ${produto.preco.toFixed(2)}</span>
+        `;
+    } else {
+        productModalPrice.textContent = `R$ ${produto.preco.toFixed(2)}`;
+    }
     
     if (productModalQty) productModalQty.value = 1;
     currentModalProductId = id;

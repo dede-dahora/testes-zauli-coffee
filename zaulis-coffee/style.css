@@ -319,6 +319,20 @@ h1, h2, h3, h4 {
     color: var(--primary-color);
 }
 
+.price-original {
+    font-size: 1rem;
+    color: #8a8a8a;
+    text-decoration: line-through;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.price-sale {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #e53935;
+}
+
 .add-to-cart {
     background-color: var(--accent-color);
     color: var(--dark-color);
@@ -498,45 +512,6 @@ h1, h2, h3, h4 {
 
 .dot.active {
     background-color: var(--primary-color);
-}
-
-/* Newsletter */
-.newsletter {
-    background-color: var(--dark-color);
-    color: var(--white);
-    padding: 60px 0;
-    text-align: center;
-}
-
-.newsletter h3 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-}
-
-.newsletter p {
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-    opacity: 0.85;
-}
-
-#newsletterForm {
-    display: flex;
-    max-width: 500px;
-    margin: 0 auto;
-    gap: 10px;
-}
-
-#newsletterForm input {
-    flex: 1;
-    padding: 15px 20px;
-    border-radius: 30px;
-    border: none;
-    font-size: 1rem;
-}
-
-#newsletterForm input.invalid {
-    border: 2px solid #C85C3A;
-    background: #F5EBE0;
 }
 
 /* Footer */
