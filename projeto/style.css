@@ -186,6 +186,12 @@ h1, h2, h3, h4 {
     font-weight: bold;
 }
 
+/* Instagram Link no Menu */
+.nav-menu li a i.fab.fa-instagram {
+    margin-right: 5px;
+    color: #E4405F;
+}
+
 .menu-toggle {
     display: none;
     background: none;
@@ -335,17 +341,6 @@ h1, h2, h3, h4 {
 
 .add-to-cart:active {
     transform: scale(0.95);
-}
-
-/* Fly-to-cart image animation */
-.fly-img {
-    position: fixed;
-    z-index: 4000;
-    pointer-events: none;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(74, 37, 17, 0.3);
-    transition: transform 0.8s cubic-bezier(.2,.8,.2,1), opacity 0.8s;
-    will-change: transform, opacity;
 }
 
 /* Pulse effect for cart count */
@@ -748,12 +743,6 @@ h1, h2, h3, h4 {
     text-align: center;
 }
 
-.cart-item-stock {
-    font-size: 0.9rem;
-    color: #A89968;
-    margin-top: 8px;
-}
-
 .remove-item {
     color: #C85C3A;
     background: none;
@@ -880,45 +869,6 @@ h1, h2, h3, h4 {
     opacity: 1;
 }
 
-/* Checkout layout */
-.checkout-grid {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 30px;
-}
-
-.checkout-left label { 
-    display: block; 
-    margin-bottom: 12px; 
-}
-
-.checkout-left input, 
-.checkout-left select { 
-    width: 100%; 
-    padding: 10px 12px; 
-    border-radius: 6px; 
-    border: 1px solid var(--gray); 
-}
-
-.checkout-right { 
-    background: var(--white); 
-    padding: 20px; 
-    border-radius: 10px; 
-    box-shadow: var(--shadow); 
-}
-
-.order-item { 
-    display: flex; 
-    justify-content: space-between; 
-    margin-bottom: 10px; 
-}
-
-.order-total { 
-    font-weight: 700; 
-    margin-top: 20px; 
-    font-size: 1.2rem; 
-}
-
 /* Float do WhatsApp */
 .whatsapp-float {
     position: fixed;
@@ -972,12 +922,6 @@ h1, h2, h3, h4 {
     
     .section-title {
         font-size: 2.2rem;
-    }
-}
-
-@media (max-width: 800px) {
-    .checkout-grid { 
-        grid-template-columns: 1fr; 
     }
     
     .product-modal-image img { 
@@ -1067,8 +1011,5 @@ h1, h2, h3, h4 {
         flex-direction: column;
         align-items: center;
     }
-    
-    .cart-modal {
-        max-width: 100%;
-    }
 }
+    

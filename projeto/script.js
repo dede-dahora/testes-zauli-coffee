@@ -14,7 +14,6 @@ const closeCart = document.getElementById('closeCart');
 const cartItems = document.getElementById('cartItems');
 const cartCount = document.getElementById('cartCount');
 const cartTotal = document.getElementById('cartTotal');
-const emptyCartMessage = document.getElementById('emptyCartMessage');
 const checkoutButton = document.getElementById('checkoutButton');
 const toast = document.getElementById('toast');
 const toastMessage = document.getElementById('toastMessage');
@@ -51,6 +50,15 @@ function renderProducts() {
     `).join('');
 }
 
+
+
+// Toast de notificação
+function showToast(message) {
+    toastMessage.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
 // Função adicionar ao carrinho
 function addToCart(id, nome, preco, imagem) {
     const item = carrinho.find(i => i.id === id);
@@ -77,7 +85,7 @@ function updateCart() {
     cartTotal.textContent = `R$ ${total.toFixed(2)}`;
     
     if (carrinho.length === 0) {
-        cartItems.innerHTML = '<p class="empty-cart" id="emptyCartMessage">Seu carrinho está vazio</p>';
+        cartItems.innerHTML = '<p class="empty-cart">Seu carrinho está vazio</p>';
     } else {
         cartItems.innerHTML = carrinho.map(item => `
             <div class="cart-item" data-id="${item.id}">
@@ -137,13 +145,6 @@ function animateCartIcon() {
     setTimeout(() => cartCount.classList.remove('pulse'), 600);
 }
 
-// Toast de notificação
-function showToast(message) {
-    toastMessage.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
 // Abrir/Fechar carrinho (prevent default on anchor)
 if (cartButton) {
     cartButton.addEventListener('click', (e) => {
@@ -167,7 +168,7 @@ if (checkoutButton) {
     });
 }
 
-// Menu móvel
+
 if (menuToggle) {
     menuToggle.addEventListener('click', () => { if (navMenu) navMenu.classList.toggle('active'); });
 }
@@ -244,23 +245,7 @@ async function fetchProducts() {
 fetchProducts();
 updateCart();
 
-// Event delegation for cart controls (increase/decrease/remove)
-if (cartItems) {
-    cartItems.addEventListener('click', (e) => {
-        const btn = e.target.closest('button');
-        if (!btn || !btn.dataset) return;
-        const id = Number(btn.dataset.id);
-        const action = btn.dataset.action;
-        if (!id || !action) return;
-        if (action === 'increase') {
-            updateQuantity(id, 1);
-        } else if (action === 'decrease') {
-            updateQuantity(id, -1);
-        } else if (action === 'remove') {
-            removeFromCart(id);
-        }
-    });
-}
+
 
 let currentModalProductId = null;
 // Product modal helpers
@@ -297,6 +282,40 @@ if (productsGrid) {
     });
 }
 
+// Event delegation for cart controls (increase/decrease/remove)
+if (cartItems) {
+    cartItems.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn || !btn.dataset) return;
+        const id = Number(btn.dataset.id);
+        const action = btn.dataset.action;
+        if (!id || !action) return;
+        if (action === 'increase') {
+            updateQuantity(id, 1);
+        } else if (action === 'decrease') {
+            updateQuantity(id, -1);
+        } else if (action === 'remove') {
+            removeFromCart(id);
+        }
+    });
+}
+
+function bindAddToCartButtons() {
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.removeEventListener('click', handleAddToCart);
+        btn.addEventListener('click', handleAddToCart);
+    });
+}
+
+function handleAddToCart(e) {
+    e.preventDefault();
+    const id = Number(this.dataset.id);
+    const produto = produtos.find(p => p.id === id);
+    if (produto) {
+        addToCart(id, produto.nome, produto.preco, produto.imagem);
+    }
+}
+
 // Add to cart from modal
 if (productModalAdd) {
     productModalAdd.addEventListener('click', () => {
@@ -316,10 +335,6 @@ if (productModalAdd) {
 const checkoutModal = document.getElementById('checkoutModal');
 const closeCheckout = document.getElementById('closeCheckout');
 const checkoutForm = document.getElementById('checkoutForm');
-const checkoutPayment = document.getElementById('checkoutPayment');
-const qrModal = document.getElementById('qrModal');
-const closeQr = document.getElementById('closeQr');
-const qrImage = document.getElementById('qrImage');
 
 function openCheckoutModal() {
     checkoutModal.style.display = 'flex';
@@ -331,75 +346,57 @@ function closeCheckoutModal() {
     checkoutModal.setAttribute('aria-hidden', 'true');
 }
 
-function openQrModal() {
-    qrModal.style.display = 'flex';
-    qrModal.setAttribute('aria-hidden', 'false');
+if (closeCheckout) {
+    closeCheckout.addEventListener('click', closeCheckoutModal);
 }
 
-function closeQrModal() {
-    qrModal.style.display = 'none';
-    qrModal.setAttribute('aria-hidden', 'true');
+if (checkoutModal) {
+    checkoutModal.addEventListener('click', (e) => {
+        if (e.target === checkoutModal) closeCheckoutModal();
+    });
 }
-
-closeCheckout.addEventListener('click', closeCheckoutModal);
-closeQr.addEventListener('click', closeQrModal);
 
 // When checkout form submitted, send cart to server
-checkoutForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('checkoutName').value.trim();
-    const phone = document.getElementById('checkoutPhone').value.trim();
-    const address = document.getElementById('checkoutAddress').value.trim();
-    const payment = checkoutPayment.value;
+if (checkoutForm) {
+    checkoutForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('checkoutName').value.trim();
+        const phone = document.getElementById('checkoutPhone').value.trim();
+        const address = document.getElementById('checkoutAddress').value.trim();
 
-    if (carrinho.length === 0) {
-        alert('Seu carrinho está vazio');
-        return;
-    }
-
-    const payload = {
-        customer: { name, phone, address },
-        items: carrinho.map(i => ({ id: i.id, nome: i.nome, preco: i.preco, quantidade: i.quantidade })),
-        total: carrinho.reduce((s, it) => s + it.preco * it.quantidade, 0),
-        paymentMethod: payment
-    };
-
-    try {
-        const res = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        if (data && data.orderId) {
-            if (payment === 'qr') {
-                // request QR for this order
-                const qrResp = await fetch('/api/payment/qr', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ orderId: data.orderId, amount: payload.total })
-                });
-                const qrJson = await qrResp.json();
-                if (qrJson && qrJson.qr) {
-                    qrImage.src = qrJson.qr;
-                    closeCheckoutModal();
-                    openQrModal();
-                    // clear cart locally
-                    resetCart();
-                    return;
-                }
-            }
-
-            // default: redirect to WhatsApp with order details
-            const totalText = `R$ ${payload.total.toFixed(2)}`;
-            const text = encodeURIComponent(`Pedido %23${data.orderId} - Total: ${totalText}\nCliente: ${name} - ${phone} - ${address}`);
-            resetCart();
-            window.location.href = `https://wa.me/${phone.replace(/[^0-9]/g,'')}?text=${text}`;
-        } else {
-            alert('Erro ao criar pedido. Tente novamente.');
+        if (carrinho.length === 0) {
+            alert('Seu carrinho está vazio');
+            return;
         }
-    } catch (err) {
-        console.error(err);
-        alert('Erro de rede. Tente novamente.');
-    }
-});
+
+        const payload = {
+            customer: { name, phone, address },
+            items: carrinho.map(i => ({ id: i.id, nome: i.nome, preco: i.preco, quantidade: i.quantidade })),
+            total: carrinho.reduce((s, it) => s + it.preco * it.quantidade, 0),
+            paymentMethod: 'whatsapp'
+        };
+
+        try {
+            const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if (data && data.orderId) {
+                // Redirect to WhatsApp with order details
+                const totalText = `R$ ${payload.total.toFixed(2)}`;
+                const text = encodeURIComponent(`Pedido %23${data.orderId} - Total: ${totalText}\nCliente: ${name} - ${phone} - ${address}`);
+                resetCart();
+                closeCheckoutModal();
+                if (cartModal) cartModal.classList.remove('active');
+                window.location.href = `https://wa.me/${phone.replace(/[^0-9]/g,'')}?text=${text}`;
+            } else {
+                alert('Erro ao criar pedido. Tente novamente.');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Erro de rede. Tente novamente.');
+        }
+    });
+}

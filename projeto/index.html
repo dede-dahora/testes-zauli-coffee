@@ -224,7 +224,7 @@
             </div>
             <div class="cart-items" id="cartItems">
                 <!-- Itens do carrinho serão inseridos via JavaScript -->
-                <p class="empty-cart" id="emptyCartMessage">Seu carrinho está vazio</p>
+                <p class="empty-cart">Seu carrinho está vazio</p>
             </div>
             <div class="cart-footer">
                 <div class="cart-total">
@@ -238,7 +238,7 @@
 
     <!-- Toast de Notificação -->
     <div class="toast" id="toast">
-        <span id="toastMessage">Produto adicionado ao carrinho!</span>
+        <span id="toastMessage">Sucesso!</span>
     </div>
 
     <!-- Product Modal -->
@@ -270,6 +270,7 @@
     </a>
 
     <script src="script.js"></script>
+    
     <!-- Checkout Modal -->
     <div class="product-modal" id="checkoutModal" aria-hidden="true">
         <div class="product-modal-content" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
@@ -284,28 +285,11 @@
                         <input type="text" id="checkoutPhone" required>
                         <label>Endereço</label>
                         <input type="text" id="checkoutAddress" required>
-                        <label>Método de Pagamento</label>
-                        <select id="checkoutPayment">
-                            <option value="whatsapp">WhatsApp (confirmar pedido)</option>
-                            <option value="qr">QR Code (pagar com app)</option>
-                        </select>
                         <div style="margin-top:12px;">
                             <button class="btn btn-primary" type="submit">Enviar Pedido</button>
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- QR Modal -->
-    <div class="product-modal" id="qrModal" aria-hidden="true">
-        <div class="product-modal-content" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
-            <button class="close-modal" id="closeQr" aria-label="Fechar">&times;</button>
-            <div class="product-modal-body" style="flex-direction:column;align-items:center;">
-                <h3 id="qrTitle">Pague com QR Code</h3>
-                <img id="qrImage" src="" alt="QR Code de pagamento" style="max-width:260px;margin:12px 0;">
-                <p>Abra seu app de pagamento e escaneie o QR. Depois confirme o pagamento.</p>
             </div>
         </div>
     </div>
