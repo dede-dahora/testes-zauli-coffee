@@ -29,6 +29,7 @@ const productModalAdd = document.getElementById('productModalAdd');
 const checkoutModal = document.getElementById('checkoutModal');
 const closeCheckout = document.getElementById('closeCheckout');
 const checkoutForm = document.getElementById('checkoutForm');
+const themeToggle = document.getElementById('themeToggle');
 
 // Dados de produtos mock (substituir pela API real)
 const produtosMock = [
@@ -65,7 +66,7 @@ const produtosMock = [
         nome: "Cápsulas para Máquinas de cápsulas - 8 unidades",
         descricao: "Capsulas compatíveis com máquinas de café expresso, para uma preparação rápida e prática",
         preco: 40.00,
-        imagem: "fotos/cafe.png"
+        imagem: "fotos/capsulas.png"
     },
    {
         id: 6,
@@ -490,8 +491,89 @@ if (checkoutForm) {
     });
 }
 
+// TEMA - Sistema de alternância claro/escuro CORRIGIDO
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Se não há tema salvo, usar modo CLARO como padrão
+    if (!savedTheme) {
+        // Modo claro por padrão
+        document.body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light');
+        updateThemeIcon();
+        return;
+    }
+    
+    // Se há tema salvo, aplicar
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    } else {
+        document.body.classList.remove('dark-theme');
+    }
+    
+    updateThemeIcon();
+}
+
+// Atualizar ícone do botão
+function updateThemeIcon() {
+    if (!themeToggle) return;
+    const isDark = document.body.classList.contains('dark-theme');
+    
+    // Ícone: Lua para modo claro, Sol para modo escuro
+    if (isDark) {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        themeToggle.setAttribute('aria-label', 'Ativar modo claro');
+    } else {
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        themeToggle.setAttribute('aria-label', 'Ativar modo escuro');
+    }
+}
+
+// Alternar entre temas
+function toggleTheme() {
+    const isDark = document.body.classList.contains('dark-theme');
+    
+    if (isDark) {
+        document.body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light');
+        showToast('Modo claro ativado!');
+    } else {
+        document.body.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark');
+        showToast('Modo escuro ativado!');
+    }
+    
+    updateThemeIcon();
+}
+
+// Adicionar evento de clique no botão de tema
+if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+}
+
+// Detectar mudança na preferência do sistema (apenas se não houver escolha salva)
+if (window.matchMedia) {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Apenas aplicar se não houver preferência salva
+    prefersDark.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+                document.body.classList.add('dark-theme');
+                updateThemeIcon();
+            } else {
+                document.body.classList.remove('dark-theme');
+                updateThemeIcon();
+            }
+        }
+    });
+}
+
 // Inicializar
 async function init() {
+    // Inicializar tema PRIMEIRO
+    initTheme();
+    
     // Carregar produtos (mock por enquanto)
     produtos = produtosMock;
     

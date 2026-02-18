@@ -1,15 +1,30 @@
 /* Estilos Gerais */
 :root {
-    --primary-color: #6F4E37;
-    --secondary-color: #8B6F47;
-    --accent-color: #A89968;
-    --dark-color: #4A2511;
-    --light-color: #F9F5F0;
-    --text-color: #3E2723;
-    --white: #FFFFFF;
-    --gray: #E8D5C4;
+    /* PALETA CLARA - MODO PADRÃO */
+    --primary-color: #6F4E37;       /* Marrom café médio */
+    --secondary-color: #8B6F47;     /* Marrom dourado */
+    --accent-color: #A89968;        /* Bege café */
+    --dark-color: #4A2511;          /* Marrom escuro para texto */
+    --light-color: #F9F5F0;         /* Bege claro de fundo */
+    --text-color: #3E2723;          /* Marrom escuro para texto */
+    --white: #FFFFFF;               /* Branco puro */
+    --gray: #E8D5C4;                /* Bege acinzentado claro */
     --shadow: 0 5px 15px rgba(74, 37, 17, 0.15);
     --transition: all 0.3s ease;
+}
+
+/* Dark theme overrides */
+body.dark-theme {
+    /* PALETA ESCURA - MODO NOTURNO */
+    --primary-color: #4b2e1f;       /* Marrom café escuro */
+    --secondary-color: #5a3b2a;     /* Marrom médio-escuro */
+    --accent-color: #7b553b;        /* Caramelo escuro */
+    --dark-color: #2d160e;          /* Marrom quase preto */
+    --light-color: #121212;         /* Fundo preto suave */
+    --text-color: #f3efe6;          /* Texto bege claro */
+    --white: #0b0b0b;               /* Preto suave */
+    --gray: #3b2f2a;               /* Marrom acinzentado escuro */
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
 }
 
 * {
@@ -27,6 +42,7 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     background-color: var(--white);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4 {
@@ -55,13 +71,15 @@ h1, h2, h3, h4 {
     font-size: 2.5rem;
     color: var(--dark-color);
     margin-bottom: 15px;
+    transition: color 0.3s ease;
 }
 
 .section-subtitle {
     font-size: 1.1rem;
-    color: #8B6F47;
+    color: var(--secondary-color);
     max-width: 600px;
     margin: 0 auto;
+    transition: color 0.3s ease;
 }
 
 .btn {
@@ -105,6 +123,7 @@ h1, h2, h3, h4 {
     left: 0;
     width: 100%;
     z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar {
@@ -121,12 +140,14 @@ h1, h2, h3, h4 {
     color: var(--dark-color);
     font-size: 1.8rem;
     font-weight: 700;
+    transition: color 0.3s ease;
 }
 
 .logo i {
     color: var(--primary-color);
     margin-right: 10px;
     font-size: 2rem;
+    transition: color 0.3s ease;
 }
 
 .nav-menu {
@@ -186,12 +207,6 @@ h1, h2, h3, h4 {
     font-weight: bold;
 }
 
-/* Instagram Link no Menu */
-.nav-menu li a i.fab.fa-instagram {
-    margin-right: 5px;
-    color: #E4405F;
-}
-
 .menu-toggle {
     display: none;
     background: none;
@@ -199,6 +214,41 @@ h1, h2, h3, h4 {
     font-size: 1.5rem;
     color: var(--dark-color);
     cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Botão de Tema */
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: var(--dark-color);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+    margin-left: 8px;
+    background-color: var(--gray);
+}
+
+.theme-toggle:hover {
+    background-color: var(--accent-color);
+    transform: rotate(15deg);
+    color: var(--white);
+}
+
+body.dark-theme .theme-toggle {
+    color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .theme-toggle:hover {
+    background-color: var(--accent-color);
+    color: var(--dark-color);
 }
 
 /* Hero Section */
@@ -206,6 +256,7 @@ h1, h2, h3, h4 {
     padding: 150px 0 80px;
     background: linear-gradient(135deg, var(--light-color) 0%, var(--white) 100%);
     overflow: hidden;
+    transition: background 0.3s ease;
 }
 
 .hero .container {
@@ -225,13 +276,15 @@ h1, h2, h3, h4 {
     font-size: 3.5rem;
     color: var(--dark-color);
     margin-bottom: 20px;
+    transition: color 0.3s ease;
 }
 
 .hero-subtitle {
     font-size: 1.2rem;
-    color: #8B6F47;
+    color: var(--secondary-color);
     margin-bottom: 30px;
     max-width: 500px;
+    transition: color 0.3s ease;
 }
 
 .hero-image {
@@ -293,12 +346,14 @@ h1, h2, h3, h4 {
     font-size: 1.4rem;
     color: var(--dark-color);
     margin-bottom: 10px;
+    transition: color 0.3s ease;
 }
 
 .product-description {
-    color: #8B6F47;
+    color: var(--secondary-color);
     margin-bottom: 15px;
     font-size: 0.9rem;
+    transition: color 0.3s ease;
 }
 
 .product-footer {
@@ -317,6 +372,7 @@ h1, h2, h3, h4 {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--primary-color);
+    transition: color 0.3s ease;
 }
 
 .price-original {
@@ -395,7 +451,8 @@ h1, h2, h3, h4 {
 
 .about-text p {
     margin-bottom: 20px;
-    color: #8B6F47;
+    color: var(--secondary-color);
+    transition: color 0.3s ease;
 }
 
 .features {
@@ -416,16 +473,19 @@ h1, h2, h3, h4 {
     font-size: 2.5rem;
     color: var(--primary-color);
     margin-bottom: 10px;
+    transition: color 0.3s ease;
 }
 
 .feature h4 {
     font-size: 1.1rem;
     color: var(--dark-color);
+    transition: color 0.3s ease;
 }
 
 /* Depoimentos */
 .testimonials {
     background-color: var(--gray);
+    transition: background-color 0.3s ease;
 }
 
 .testimonials-slider {
@@ -440,6 +500,7 @@ h1, h2, h3, h4 {
     padding: 40px;
     box-shadow: var(--shadow);
     display: none;
+    transition: background-color 0.3s ease;
 }
 
 .testimonial.active {
@@ -453,20 +514,23 @@ h1, h2, h3, h4 {
 .testimonial-content p {
     font-size: 1.2rem;
     font-style: italic;
-    color: #8B6F47;
+    color: var(--secondary-color);
     margin-bottom: 30px;
     line-height: 1.8;
+    transition: color 0.3s ease;
 }
 
 .testimonial-author h4 {
     font-size: 1.3rem;
     color: var(--dark-color);
     margin-bottom: 5px;
+    transition: color 0.3s ease;
 }
 
 .testimonial-author span {
     color: var(--secondary-color);
     font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .slider-controls {
@@ -519,6 +583,7 @@ h1, h2, h3, h4 {
     background-color: var(--dark-color);
     color: var(--white);
     padding: 60px 0 20px;
+    transition: background-color 0.3s ease;
 }
 
 .footer-content {
@@ -532,6 +597,7 @@ h1, h2, h3, h4 {
     font-size: 1.3rem;
     margin-bottom: 20px;
     color: var(--accent-color);
+    transition: color 0.3s ease;
 }
 
 .footer-col ul {
@@ -563,6 +629,7 @@ h1, h2, h3, h4 {
     color: var(--accent-color);
     margin-right: 10px;
     margin-top: 5px;
+    transition: color 0.3s ease;
 }
 
 .social-icons {
@@ -616,7 +683,7 @@ h1, h2, h3, h4 {
     background-color: var(--white);
     box-shadow: -5px 0 15px rgba(74, 37, 17, 0.15);
     z-index: 2000;
-    transition: right 0.4s ease;
+    transition: right 0.4s ease, background-color 0.3s ease;
     display: flex;
     flex-direction: column;
 }
@@ -632,6 +699,7 @@ h1, h2, h3, h4 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background-color 0.3s ease;
 }
 
 .cart-title {
@@ -688,8 +756,9 @@ h1, h2, h3, h4 {
 }
 
 .cart-item-price {
-    color: #8B6F47;
+    color: var(--secondary-color);
     font-weight: 700;
+    transition: color 0.3s ease;
 }
 
 .cart-item-controls {
@@ -710,6 +779,7 @@ h1, h2, h3, h4 {
     align-items: center;
     cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 .cart-item-quantity {
@@ -729,14 +799,16 @@ h1, h2, h3, h4 {
 
 .empty-cart {
     text-align: center;
-    color: #A89968;
+    color: var(--accent-color);
     padding: 40px 0;
+    transition: color 0.3s ease;
 }
 
 .cart-footer {
     padding: 20px;
     border-top: 1px solid var(--gray);
     background-color: var(--gray);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .cart-total {
@@ -746,6 +818,7 @@ h1, h2, h3, h4 {
     font-weight: 700;
     margin-bottom: 20px;
     color: var(--dark-color);
+    transition: color 0.3s ease;
 }
 
 /* Product modal */
@@ -771,6 +844,7 @@ h1, h2, h3, h4 {
     padding: 20px;
     box-shadow: 0 20px 60px rgba(74, 37, 17, 0.2);
     position: relative;
+    transition: background-color 0.3s ease;
 }
 
 .product-modal-body {
@@ -799,223 +873,5 @@ h1, h2, h3, h4 {
     top: 12px;
     background: none;
     border: none;
-    font-size: 2rem;
-    color: var(--dark-color);
-    cursor: pointer;
-}
-
-.product-modal-price {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    margin: 10px 0 20px;
-}
-
-#productModalQty {
-    width: 80px;
-    padding: 8px 10px;
-    margin-bottom: 10px;
-}
-
-.stock-info {
-    margin-top: 10px;
-    color: #8B6F47;
-    font-size: 0.95rem;
-}
-
-/* Toast */
-.toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 15px 30px;
-    border-radius: 30px;
-    box-shadow: var(--shadow);
-    z-index: 3000;
-    transition: transform 0.4s cubic-bezier(.2,.8,.2,1), opacity 0.4s;
-    font-weight: 500;
-    opacity: 0;
-}
-
-.toast.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-}
-
-/* Float do WhatsApp */
-.whatsapp-float {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    background-color: #25D366;
-    color: #FFF;
-    border-radius: 50%;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.whatsapp-float:hover {
-    background-color: #128C7E;
-    transform: scale(1.1);
-}
-
-/* Accessibility helper */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* Focus visible */
-:focus {
-    outline: 3px solid rgba(139,69,19,0.25);
-    outline-offset: 2px;
-}
-
-/* Responsividade */
-@media (max-width: 992px) {
-    .hero-title {
-        font-size: 2.8rem;
-    }
-    
-    .section-title {
-        font-size: 2.2rem;
-    }
-    
-    .product-modal-image img { 
-        width: 240px; 
-        max-width: 40%; 
-    }
-    
-    .product-modal-body {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-    
-    .nav-menu {
-        position: fixed;
-        top: 80px;
-        left: -100%;
-        width: 100%;
-        flex-direction: column;
-        background-color: var(--white);
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        padding: 20px 0;
-        transition: left 0.3s ease;
-        z-index: 999;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .nav-menu li {
-        margin: 15px 0;
-        text-align: center;
-    }
-    
-    .hero .container {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .hero-content {
-        padding-right: 0;
-        margin-bottom: 40px;
-    }
-    
-    .section-padding {
-        padding: 60px 0;
-    }
-    
-    #newsletterForm {
-        flex-direction: column;
-    }
-    
-    #newsletterForm input, 
-    #newsletterForm button {
-        width: 100%;
-    }
-    
-    .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        font-size: 25px;
-        bottom: 20px;
-        right: 20px;
-    }
-    
-    .nav-menu li a i.fab.fa-instagram {
-        display: inline-block;
-        margin-right: 8px;
-    }
-}
-
-@media (max-width: 576px) {
-    .hero-title {
-        font-size: 2.2rem;
-    }
-    
-    .section-title {
-        font-size: 1.8rem;
-    }
-    
-    .features {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-    
-/* Checkout Modal Styles */
-#checkoutModal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.5);
-    z-index: 2500;
-}
-
-#checkoutModal[aria-hidden="false"] {
-    display: flex;
-}
-
-#checkoutForm input {
-    display: block;
-    width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    border: 1px solid var(--gray);
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-#checkoutForm label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: var(--dark-color);
+    font-size: 1.8rem;
 }
